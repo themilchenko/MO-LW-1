@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <algorithm>
@@ -8,38 +7,37 @@
 #include <string>
 #include <vector>
 
-
 class Symplex
 {
-	/*ìàòðèöà ïðåîáðàçîâàíèé*/
+	/*матрица преобразований*/
 	std::vector<std::vector<double>> table_;
 
-	/*ðåçðåøàþùèå òàáëèöà è ñòðîêà*/
+	/*резрешающие таблица и строка*/
 	int permissive_str_;
 	int permissive_column_;
 
-	/*âåêòîðà ïåðåìåííûõ äëÿ òàáëèöû*/
+	/*вектора переменных для таблицы*/
 	std::vector<std::string> basis_;
 	std::vector<std::string> free_;
 
 public:
-	/*êîíñòðóêòîð äëÿ ñáîðêè òàáëèöû èç ôàéëà*/
+	/*конструктор для сборки таблицы из файла*/
 	Symplex(std::ifstream& input);
 
-	/*ïðîâåðêà íà îïòèìàëüíîñòü*/
+	/*проверка на оптимальность*/
 	bool is_optimal() const;
 
-	/*ïå÷àòü òàáëèöû*/
+	/*печать таблицы*/
 	void print() const;
 
-	/*ïîèñê ðàçðåøàþùåé êîëíêè è ñðîêè*/
+	/*поиск разрешающей колнки и сроки*/
 	int find_column() const;
 	int find_str() const;
 
-	/*îäíà èòåðàöèÿ ïðåîáðàçîâàíèÿ*/
+	/*одна итерация преобразования*/
 	void do_step();
 
-	/*ãåòòåð îïòèìàëüíîãî ðåøåíèÿ*/
+	/*геттер оптимального решения*/
 	double get_solution() const;
 
 	~Symplex()
