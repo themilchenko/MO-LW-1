@@ -6,7 +6,7 @@ Symplex::Symplex(std::ifstream& input)
 	std::vector<std::vector<double>> v2;
 	std::vector<double> v3;
 
-	/*считываение условие задачи из файла*/
+	/*СЃС‡РёС‚С‹РІР°РµРЅРёРµ СѓСЃР»РѕРІРёРµ Р·Р°РґР°С‡Рё РёР· С„Р°Р№Р»Р°*/
 	while (!input.eof())
 	{
 		std::string current_str;
@@ -18,9 +18,9 @@ Symplex::Symplex(std::ifstream& input)
 			std::getline(input, res, 'b');
 			std::string num_str = "";
 
-			res.erase(res.end() - 1);  // удаляю перевод строки
-			res.erase(res.begin());    // удаляю первый [
-			res.erase(res.end() - 1);  // удаляю последний ]
+			res.erase(res.end() - 1);  // СѓРґР°Р»СЏСЋ РїРµСЂРµРІРѕРґ СЃС‚СЂРѕРєРё
+			res.erase(res.begin());    // СѓРґР°Р»СЏСЋ РїРµСЂРІС‹Р№ [
+			res.erase(res.end() - 1);  // СѓРґР°Р»СЏСЋ РїРѕСЃР»РµРґРЅРёР№ ]
 
 			int num = std::count(res.begin(), res.end(), '\n');
 			v2.resize(num + 1);
@@ -67,10 +67,10 @@ Symplex::Symplex(std::ifstream& input)
 		
 	}
 
-	/*создание симплекс-таблицы*/
-	table_.resize(v2.size() + 1); // плюс строка с функцией
+	/*СЃРѕР·РґР°РЅРёРµ СЃРёРјРїР»РµРєСЃ-С‚Р°Р±Р»РёС†С‹*/
+	table_.resize(v2.size() + 1); // РїР»СЋСЃ СЃС‚СЂРѕРєР° СЃ С„СѓРЅРєС†РёРµР№
 
-	/*заполняем свободные коэффициенты*/
+	/*Р·Р°РїРѕР»РЅСЏРµРј СЃРІРѕР±РѕРґРЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹*/
 	for (size_t i = 0; i < table_.size(); ++i)
 	{
 		if (i != table_.size() - 1)
@@ -79,7 +79,7 @@ Symplex::Symplex(std::ifstream& input)
 			table_[i].push_back(0);
 	}
 
-	/*заполняем основную часть таблицы*/
+	/*Р·Р°РїРѕР»РЅСЏРµРј РѕСЃРЅРѕРІРЅСѓСЋ С‡Р°СЃС‚СЊ С‚Р°Р±Р»РёС†С‹*/
 	for (size_t i = 0; i < v2.size(); ++i)
 		for (size_t j = 0; j < v2[i].size(); ++j)
 			table_[i].push_back(v2[i][j]);
@@ -87,7 +87,7 @@ Symplex::Symplex(std::ifstream& input)
 	for (size_t i = 0; i < v1.size(); ++i)
 		table_[table_.size() - 1].push_back(-v1[i]);
 
-	/*заполнение векторов базисными и свободными переменными*/
+	/*Р·Р°РїРѕР»РЅРµРЅРёРµ РІРµРєС‚РѕСЂРѕРІ Р±Р°Р·РёСЃРЅС‹РјРё Рё СЃРІРѕР±РѕРґРЅС‹РјРё РїРµСЂРµРјРµРЅРЅС‹РјРё*/
 	for (size_t i = 0; i < table_[0].size() - 1; ++i)
 		free_.push_back('x' + std::to_string(i + 1));
 
@@ -156,17 +156,17 @@ void Symplex::do_step()
 	permissive_column_ = find_column();
 	permissive_str_ = find_str();
 
-	/*swap переменных xi и xj*/
+	/*swap РїРµСЂРµРјРµРЅРЅС‹С… xi Рё xj*/
 	std::string temp = basis_[permissive_str_];
 	basis_[permissive_str_] = free_[permissive_column_ - 1];
 	free_[permissive_column_ - 1] = temp;
 
-	/*создаем матрицу, в кот. буду переписываться новые значения*/
+	/*СЃРѕР·РґР°РµРј РјР°С‚СЂРёС†Сѓ, РІ РєРѕС‚. Р±СѓРґСѓ РїРµСЂРµРїРёСЃС‹РІР°С‚СЊСЃСЏ РЅРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ*/
 	std::vector<std::vector<double>> copy_to(table_.size());
 	for (auto& i : copy_to)
 		i.resize(table_[0].size());
 
-	/*переопределяем элементы таблицы*/
+	/*РїРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј СЌР»РµРјРµРЅС‚С‹ С‚Р°Р±Р»РёС†С‹*/
 	for (size_t i = 0; i < table_.size(); ++i)
 		for (size_t j = 0; j < table_[i].size(); ++j)
 		{
