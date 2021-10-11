@@ -1,4 +1,4 @@
-﻿// IU8-34, Milchenko Ivan, 14 Variant
+// IU8-34, Milchenko Ivan, 14 Variant
 // F = cx -> max
 // Ax <= b
 
@@ -6,7 +6,7 @@
 
 int main()
 {
-	std::string path = "C:/Users/User/source/repos/MO_LAB1/input.txt";
+	std::string path = "/Users/ivanmilchenko/MO-lab-01/input.txt";
 	std::ifstream input(path);
 	if (!input)
 		throw std::runtime_error("Unable to open file " + path);
@@ -18,7 +18,7 @@ int main()
 
 	size_t iterations = 0;
 
-	while (problem.is_optimal())
+    while (problem.is_optimal())
 	{
 		++iterations;
 		std::cout << "THE " << iterations << " STEP:\n";
@@ -26,6 +26,8 @@ int main()
 		problem.print();
 	}
 
-	std::cout << "THE SOLUTION IS " << problem.get_solution();
+	std::cout << "THE SOLUTION IS " << problem.get_solution() << std::endl;
+    	problem.do_examination();
+
 	return 0;
 }
